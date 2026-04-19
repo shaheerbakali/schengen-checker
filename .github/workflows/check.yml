@@ -1,0 +1,32 @@
+name: Schengen Slot Checker
+
+on:
+  schedule:
+    # Runs every 5 minutes — the minimum GitHub allows
+    - cron: "*/5 * * * *"
+
+  # Also lets you trigger it manually from GitHub website (useful for testing)
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3     # kill if it hangs
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4
+
+      - name: Run slot checker
+        env:
+          NTFY_TOPIC:  ${{ secrets.NTFY_TOPIC }}
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+        run: python check.py
