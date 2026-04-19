@@ -204,7 +204,7 @@ def send_webhook(country, days, link):
 
 def main():
     print("=" * 55)
-    print(f"Schengen Checker  {datetime.now(datetime.UTC).strftime('%Y-%m-%d %H:%M UTC')}")
+    print(f"Schengen Checker  {datetime.utcnow().strftime('%Y-%m-%d %H:%M UTC')}")
     print(f"Watching: {', '.join(PREFERRED_COUNTRIES)}")
     print(f"Minimum slots needed on same day: {MIN_SLOTS_SAME_DAY}")
     print(f"ntfy topic: {NTFY_TOPIC}")
